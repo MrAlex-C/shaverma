@@ -11,7 +11,7 @@ class Stall(models.Model):
     address = models.CharField(max_length=200)
 
 
-class FoodList(models.Model):
+class FoodInStall(models.Model):
 
     stall = models.ForeignKey(Stall)
     food_name = models.CharField(max_length=40)
