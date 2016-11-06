@@ -6,20 +6,9 @@ from django.template import RequestContext
 
 
 def showListStalls(request):
-    stall_name = Stall.name
-    stall_main_picture = Stall.main_picture
-    stall_description = Stall.description
-    stall_reviews_counter = Stall.reviews_counter
-    stall_rating = Stall.rating
-    stall_address = Stall.address
+    stalls_list = []
+    for stall in Stall.objects.all():
+        stalls_list.append(stall.name)
+        stalls_list.append(stall.rating)
 
-    template = loader.get_template('stalls/list stalls.html')
-    context = RequestContext(request, {
-        'stall_name': stall_name,
-        'stall_main_picture': stall_main_picture,
-        'stall_description': stall_description,
-        'stall_reviews_counter': stall_reviews_counter,
-        'stall_rating': stall_rating,
-        'stall_address': stall_address
-    })
-    return HttpResponse(template.render(context))
+    return HttpResponse(stalls_list)
