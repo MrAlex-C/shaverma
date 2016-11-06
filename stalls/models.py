@@ -6,7 +6,7 @@ class Stall(models.Model):
     name = models.CharField(max_length=40)
     main_picture = models.ImageField()
     description = models.CharField(max_length=400)
-    recalls_counter = models.IntegerField(default=0)
+    reviews_counter = models.IntegerField(default=0)
     rating = models.FloatField(default=0)
     address = models.CharField(max_length=200)
 
