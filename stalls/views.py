@@ -14,7 +14,7 @@ def showListStalls(request):
     stall_address = Stall.address
     stall_name = 'name'
     stall_rating = 15
-    template = loader.get_template('stalls/list stals.html')
+    template = loader.get_template('stalls/list stalls.html')
     context = RequestContext(request, {
         'stall_name': stall_name,
         'stall_main_picture': stall_main_picture,
