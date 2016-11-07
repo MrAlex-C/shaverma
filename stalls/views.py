@@ -8,7 +8,11 @@ from django.template import RequestContext
 def showListStalls(request):
     stalls_list = []
     for stall in Stall.objects.all():
-        stalls_list.append(stall.name)
-        stalls_list.append(stall.rating)
+        stalls_list.append(stall)
 
-    return HttpResponse(stalls_list)
+    template = loader.get_template('stalls.list_stalls')
+    context = RequestContext(request, {
+        'stalls_list': stalls_list,
+    })
+
+    return HttpResponse(template.render(context))
