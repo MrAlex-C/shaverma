@@ -5,12 +5,23 @@
 </head>
 
 <body>
-{{ stalls_list.name }}
-{#{{ stall_main_picture }}#}
-{#{{ stall_description }}#}
-{#{{ stall_reviews_counter }}#}
-{#{{ stall_rating }}#}
-{#{{ stall_address }}#}
+<form action="">
+    {{ form.search.label_tag }}
+    {{ form.search }}
+    {{ form.sort_field }}
+    <input type="submit">
+    {{ form.errors }}
+</form>
+
+
+{% for stall in object_list %}
+    <i>{{ stall.name }}</i>.
+    {{ stall.main_picture }}.
+    {{ stall.address }}.
+    {{ stall.reviews_counter }}.
+    {{ stall.rating }}.
+    <br>
+{% endfor %}
 </body>
 </html>
 

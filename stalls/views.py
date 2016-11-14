@@ -1,18 +1,27 @@
-from django.shortcuts import render
-from django.http import HttpResponse
 from stalls.models import Stall
-from django.template import loader
-from django.template import RequestContext
+from stalls.forms import StallListForm
+from django.views import generic
 
 
-def showListStalls(request):
-    stalls_list = []
-    for stall in Stall.objects.all():
-        stalls_list.append(stall)
+class StallsList(generic.ListView):
 
-    template = loader.get_template('stalls.list_stalls')
-    context = RequestContext(request, {
-        'stalls_list': stalls_list,
-    })
+    template_name = 'stalls/stall_list.html'
+    model = Stall
 
-    return HttpResponse(template.render(context))
+    def dispatch(self, request, *args, **kwargs):
+        self.form = StallListForm(request.GET)
+        self.form.is_valid()
+        return super(StallsList, self).dispatch(request, *args, **kwargs)
+
+    def get_queryset(self):
+        queryset = Stall.objects.all()
+        if self.form.cleaned_data.get('search'):
+            queryset = queryset.filter(name__icontains=self.form.cleaned_data['search'])
+        if self.form.cleaned_data.get('sort_field'):
+            queryset = queryset.order_by(self.form.cleaned_data['sort_field'])
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(StallsList, self).get_context_data(**kwargs)
+        context['form'] = self.form
+        return context
